@@ -1,10 +1,11 @@
-import { CategoryType, Category } from '@/types';
+import { CategoryType } from '@/types';
 import Tab from '@/components/common/Tab';
 import TabList from '@/components/common/TabList';
 import TabButton from '@/components/common/TabButton';
 import TabPanel from '@/components/common/TabPanel';
 import SubCategoryTabPanel from '@/components/SubCategoryTabPanel';
 import SearchBar from '@/components/SearchBar';
+import { fetchCategories } from '@/services';
 
 type CategoryTabPanelProps = {
   category: CategoryType;
@@ -13,10 +14,8 @@ type CategoryTabPanelProps = {
 export default async function CategoryTabPanel({
   category,
 }: CategoryTabPanelProps) {
-  const jsonData = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/faq/category${`?tab=${category}`}`,
-  );
-  const data = (await jsonData.json()) as Category[];
+  const data = await fetchCategories(category);
+
   return (
     <TabPanel id={category}>
       <Tab defaultTab="ALL">
