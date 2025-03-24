@@ -1,8 +1,8 @@
-type Category = 'CONSULT' | 'USAGE';
+type CategoryType = 'CONSULT' | 'USAGE';
 
-type ConsultFaqCategory = 'PRODUCT' | 'COUNSELING' | 'CONTRACT';
+type ConsultFaqCategoryType = 'PRODUCT' | 'COUNSELING' | 'CONTRACT';
 
-type UsageFaqCategory =
+type UsageFaqCategoryType =
   | 'COUPON'
   | 'REFUEL'
   | 'SIGN_UP'
@@ -10,6 +10,11 @@ type UsageFaqCategory =
   | 'ACCIDENT'
   | 'RESERVATION'
   | 'VEHICLE';
+
+type Category = {
+  categoryID: ConsultFaqCategoryType | UsageFaqCategoryType;
+  name: string;
+};
 
 type Faq = {
   id: number;
@@ -33,10 +38,11 @@ type FaqResponse = {
 };
 
 export type {
-  Category,
-  ConsultFaqCategory,
-  UsageFaqCategory,
+  CategoryType,
+  ConsultFaqCategoryType,
+  UsageFaqCategoryType,
   Faq,
+  Category,
   PageInfo,
   FaqResponse,
 };

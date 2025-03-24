@@ -1,5 +1,5 @@
 {
-  "consultCategories": [
+  "CONSULT": [
     {
       "categoryID": "PRODUCT",
       "name": "서비스 상품"
@@ -13,7 +13,7 @@
       "name": "계약"
     }
   ],
-  "usageCategories": [
+  "USAGE": [
     {
       "categoryID": "SIGN_UP",
       "name": "가입문의"

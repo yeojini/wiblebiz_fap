@@ -3,9 +3,9 @@ import categoriesData from './categories.json';
 import consultFaqsData from './consult_faqs.json';
 import usageFaqsData from './usage_faqs.json';
 import {
-  Category,
-  ConsultFaqCategory,
-  UsageFaqCategory,
+  CategoryType,
+  ConsultFaqCategoryType,
+  UsageFaqCategoryType,
   Faq,
   PageInfo,
   FaqResponse,
@@ -13,9 +13,9 @@ import {
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
-const { consultCategories, usageCategories } = categoriesData;
-const consultFaqs = consultFaqsData as Record<ConsultFaqCategory, Faq[]>;
-const usageFaqs = usageFaqsData as Record<UsageFaqCategory, Faq[]>;
+const { CONSULT, USAGE } = categoriesData;
+const consultFaqs = consultFaqsData as Record<ConsultFaqCategoryType, Faq[]>;
+const usageFaqs = usageFaqsData as Record<UsageFaqCategoryType, Faq[]>;
 
 /**
  * 페이지네이션 정보 생성 헬퍼 함수
@@ -59,14 +59,14 @@ const createResponse = (
 export const handlers = [
   http.get(`${baseUrl}/api/faq/category`, async ({ request }) => {
     const url = new URL(request.url);
-    const tab = url.searchParams.get('tab') as Category | null;
+    const tab = url.searchParams.get('tab') as CategoryType | null;
 
     if (tab === 'CONSULT') {
-      return HttpResponse.json(consultCategories);
+      return HttpResponse.json(CONSULT);
     }
 
     if (tab === 'USAGE') {
-      return HttpResponse.json(usageCategories);
+      return HttpResponse.json(USAGE);
     }
 
     return new HttpResponse(null, { status: 400 });
@@ -76,7 +76,7 @@ export const handlers = [
     const url = new URL(request.url);
     const limit = Number(url.searchParams.get('limit') || '10');
     const offset = Number(url.searchParams.get('offset') || '0');
-    const tab = url.searchParams.get('tab') as Category | null;
+    const tab = url.searchParams.get('tab') as CategoryType | null;
     const faqCategoryID = url.searchParams.get('faqCategoryID');
 
     if (tab === 'CONSULT') {
@@ -85,7 +85,7 @@ export const handlers = [
         return HttpResponse.json(createResponse(allConsultFaqs, offset, limit));
       }
 
-      const categoryId = faqCategoryID as ConsultFaqCategory;
+      const categoryId = faqCategoryID as ConsultFaqCategoryType;
       if (categoryId in consultFaqs) {
         const faqs = consultFaqs[categoryId];
         return HttpResponse.json(createResponse(faqs, offset, limit));
@@ -100,7 +100,7 @@ export const handlers = [
         return HttpResponse.json(createResponse(allUsageFaqs, offset, limit));
       }
 
-      const categoryId = faqCategoryID as UsageFaqCategory;
+      const categoryId = faqCategoryID as UsageFaqCategoryType;
       if (categoryId in usageFaqs) {
         const faqs = usageFaqs[categoryId];
         return HttpResponse.json(createResponse(faqs, offset, limit));
