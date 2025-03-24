@@ -4,6 +4,7 @@ import TabList from '@/components/common/TabList';
 import TabButton from '@/components/common/TabButton';
 import TabPanel from '@/components/common/TabPanel';
 import SubCategoryTabPanel from '@/components/SubCategoryTabPanel';
+import SearchBar from '@/components/SearchBar';
 
 type CategoryTabPanelProps = {
   category: CategoryType;
@@ -19,6 +20,7 @@ export default async function CategoryTabPanel({
   return (
     <TabPanel id={category}>
       <Tab defaultTab="ALL">
+        <SearchBar />
         <TabList>
           <TabButton id="ALL">전체</TabButton>
           {data.map((item) => (
