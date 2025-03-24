@@ -1,4 +1,5 @@
 import { SubCategoryType, CategoryType } from '@/types';
+import FaqList from '@/components/FAQList';
 import TabPanel from '@/components/common/TabPanel';
 import { fetchFaqs } from '@/services';
 
@@ -11,15 +12,23 @@ export default async function SubCategoryTabPanel({
   category,
   subCategory,
 }: SubCategoryTabPanelProps) {
-  const data = await fetchFaqs(category, subCategory, 0, 10);
+  const { items, pageInfo } = await fetchFaqs(category, subCategory, 0, 10);
+  const hasMore = pageInfo.offset + pageInfo.limit < pageInfo.totalRecord;
 
   return (
     <TabPanel id={subCategory}>
-      {data.items.map((item) => (
+      {items.map((item) => (
         <div key={item.id} id={item.id.toString()}>
           {item.question}
         </div>
       ))}
+      {hasMore && (
+        <FaqList
+          pageInfo={pageInfo}
+          category={category}
+          subCategory={subCategory}
+        />
+      )}
     </TabPanel>
   );
 }
