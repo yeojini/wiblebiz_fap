@@ -39,10 +39,13 @@ export async function fetchFaqs(
 ): Promise<FaqResponse> {
   const queryParams = new URLSearchParams({
     tab: category,
-    category: subCategory,
-    offset: offset.toString(),
     limit: limit.toString(),
+    offset: offset.toString(),
   });
+
+  if (subCategory !== 'ALL') {
+    queryParams.append('faqCategoryID', subCategory);
+  }
 
   if (query) {
     queryParams.append('query', query);
