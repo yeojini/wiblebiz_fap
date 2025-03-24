@@ -1,8 +1,4 @@
 async function initMocks() {
-  if (process.env.NODE_ENV === 'production') {
-    return;
-  }
-
   try {
     if (typeof window !== 'undefined') {
       const { worker } = await import('./browser');
