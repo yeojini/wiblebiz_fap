@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { SubCategoryType, CategoryType, PageInfo, Faq } from '@/types';
 import { fetchFaqs } from '@/services';
+import FAQAccordion from '@/components/FAQAccordion';
 
 type FaqListProps = {
   pageInfo: PageInfo;
@@ -42,9 +43,7 @@ export default function FaqList({
   return (
     <>
       {items.map((item) => (
-        <div key={item.id} id={item.id.toString()}>
-          {item.question}
-        </div>
+        <FAQAccordion key={item.id} {...item} />
       ))}
       {isLoading && <div>로딩 중...</div>}
       {hasMore && (

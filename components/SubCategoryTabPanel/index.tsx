@@ -2,6 +2,7 @@ import { SubCategoryType, CategoryType } from '@/types';
 import FaqList from '@/components/FAQList';
 import TabPanel from '@/components/common/TabPanel';
 import { fetchFaqs } from '@/services';
+import FAQAccordion from '@/components/FAQAccordion';
 
 type SubCategoryTabPanelProps = {
   category: CategoryType;
@@ -17,10 +18,15 @@ export default async function SubCategoryTabPanel({
 
   return (
     <TabPanel id={subCategory}>
-      {items.map((item) => (
-        <div key={item.id} id={item.id.toString()}>
-          {item.question}
-        </div>
+      {items.map(({ id, categoryName, subCategoryName, question, answer }) => (
+        <FAQAccordion
+          key={id}
+          id={id}
+          categoryName={categoryName}
+          subCategoryName={subCategoryName}
+          question={question}
+          answer={answer}
+        />
       ))}
       {hasMore && (
         <FaqList
