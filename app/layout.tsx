@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import MSWComponent from '@/components/MSWComponent';
 import './globals.css';
 
@@ -28,7 +30,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <MSWComponent />
+        <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
