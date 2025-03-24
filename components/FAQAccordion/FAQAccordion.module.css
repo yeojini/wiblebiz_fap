@@ -1,0 +1,55 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.left {
+  display: flex;
+  margin-right: auto;
+}
+
+.categoryContainer {
+  display: flex;
+  align-items: center;
+}
+
+.category {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.arrowRight {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .arrowRight {
+    display: block;
+    transform: rotate(-90deg) scale(0.67);
+  }
+
+  .left {
+    flex-direction: column;
+  }
+}
+
+.question {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.icon {
+  transition: transform .4s var(--cubic-bezier-primary), -webkit-transform .4s var(--cubic-bezier-primary);
+}
+
+.up {
+  transform: rotate(180deg);
+}
