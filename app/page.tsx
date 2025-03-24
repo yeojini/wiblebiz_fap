@@ -1,5 +1,6 @@
 import FAQSection from '@/components/FAQSection';
 import ServiceInquirySection from '@/components/ServiceInquirySection';
+import ServiceGuideSection from '@/components/ServiceGuideSection';
 
 export default async function Home() {
   return (
@@ -11,6 +12,7 @@ export default async function Home() {
         </section>
         <FAQSection />
         <ServiceInquirySection />
+        <ServiceGuideSection />
       </main>
     </div>
   );

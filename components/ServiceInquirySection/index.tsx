@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import DownloadIcon from '@/aseets/icons/download_icon.svg';
-import TalkIcon from '@/aseets/icons/talk_icon.svg';
-import WriteIcon from '@/aseets/icons/write_icon.svg';
+import DownloadIcon from '@/assets/icons/download_icon.svg';
+import TalkIcon from '@/assets/icons/talk_icon.svg';
+import WriteIcon from '@/assets/icons/write_icon.svg';
 
 export default function ServiceInquirySection() {
   return (
