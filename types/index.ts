@@ -11,8 +11,10 @@ type UsageFaqCategoryType =
   | 'RESERVATION'
   | 'VEHICLE';
 
+type SubCategoryType = ConsultFaqCategoryType | UsageFaqCategoryType | 'ALL';
+
 type Category = {
-  categoryID: ConsultFaqCategoryType | UsageFaqCategoryType;
+  categoryID: SubCategoryType;
   name: string;
 };
 
@@ -41,6 +43,7 @@ export type {
   CategoryType,
   ConsultFaqCategoryType,
   UsageFaqCategoryType,
+  SubCategoryType,
   Faq,
   Category,
   PageInfo,
