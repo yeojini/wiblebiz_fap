@@ -5,6 +5,8 @@ import CategoryTabPanel from '@/components/CategoryTabPanel';
 import PrefetchBoundary from '@/lib/react-query/PrefetchBoundary';
 import { QUERY_KEYS } from '@/services/queryKeys';
 import { fetchCategories } from '@/services/faq';
+import SearchBar from '@/components/SearchBar';
+import SearchProvider from '@/components/SearchProvider';
 
 export default async function FAQSection() {
   return (
@@ -13,21 +15,24 @@ export default async function FAQSection() {
         <TabButton id="CONSULT">서비스 도입</TabButton>
         <TabButton id="USAGE">서비스 이용</TabButton>
       </TabList>
-      <PrefetchBoundary
-        fetchQueryOptions={[
-          {
-            queryKey: QUERY_KEYS.FAQ.CATEGORIES('CONSULT'),
-            queryFn: () => fetchCategories('CONSULT'),
-          },
-          {
-            queryKey: QUERY_KEYS.FAQ.CATEGORIES('USAGE'),
-            queryFn: () => fetchCategories('USAGE'),
-          },
-        ]}
-      >
-        <CategoryTabPanel category="CONSULT" />
-        <CategoryTabPanel category="USAGE" />
-      </PrefetchBoundary>
+      <SearchProvider>
+        <SearchBar />
+        <PrefetchBoundary
+          fetchQueryOptions={[
+            {
+              queryKey: QUERY_KEYS.FAQ.CATEGORIES('CONSULT'),
+              queryFn: () => fetchCategories('CONSULT'),
+            },
+            {
+              queryKey: QUERY_KEYS.FAQ.CATEGORIES('USAGE'),
+              queryFn: () => fetchCategories('USAGE'),
+            },
+          ]}
+        >
+          <CategoryTabPanel category="CONSULT" />
+          <CategoryTabPanel category="USAGE" />
+        </PrefetchBoundary>
+      </SearchProvider>
     </Tab>
   );
 }

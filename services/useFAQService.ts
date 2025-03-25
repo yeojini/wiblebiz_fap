@@ -24,11 +24,12 @@ export function useFaqList({
   category,
   subCategory = 'ALL',
   limit = 10,
+  query,
 }: UseFaqListParams) {
   return useSuspenseInfiniteQuery({
-    queryKey: QUERY_KEYS.FAQ.LIST(category, subCategory),
+    queryKey: QUERY_KEYS.FAQ.LIST(category, subCategory, query),
     queryFn: ({ pageParam = 0 }) =>
-      fetchFaqs(category, subCategory, pageParam, limit),
+      fetchFaqs(category, subCategory, pageParam, limit, query),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       const { offset, limit, totalRecord } = lastPage.pageInfo;

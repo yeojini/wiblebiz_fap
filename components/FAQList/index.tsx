@@ -3,6 +3,7 @@
 import { CategoryType, SubCategoryType } from '@/types';
 import { useFaqList } from '@/services/useFAQService';
 import FAQAccordion from '@/components/FAQAccordion';
+import useSearchContext from '@/hooks/useSearchContext';
 
 type FAQListProps = {
   category: CategoryType;
@@ -10,10 +11,12 @@ type FAQListProps = {
 };
 
 export default function FAQList({ category, subCategory }: FAQListProps) {
+  const { query } = useSearchContext();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useFaqList({
     category,
     subCategory,
     limit: 10,
+    query,
   });
 
   return (

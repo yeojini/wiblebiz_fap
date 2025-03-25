@@ -38,6 +38,17 @@ export const handlers = [
     const offset = Number(url.searchParams.get('offset') || '0');
     const tab = url.searchParams.get('tab') as CategoryType | null;
     const faqCategoryID = url.searchParams.get('faqCategoryID');
+    const query = url.searchParams.get('query');
+
+    if (query) {
+      const allConsultFaqs = Object.values(consultFaqs).flat();
+      const allUsageFaqs = Object.values(usageFaqs).flat();
+      const allFaqs = [...allConsultFaqs, ...allUsageFaqs];
+      const filteredFaqs = allFaqs.filter((faq) =>
+        faq.question.includes(query),
+      );
+      return HttpResponse.json(createResponse(filteredFaqs, offset, limit));
+    }
 
     if (tab === 'CONSULT') {
       if (!faqCategoryID) {
