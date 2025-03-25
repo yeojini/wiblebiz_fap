@@ -1,56 +1,47 @@
 'use client';
 
-import { useState } from 'react';
-import { SubCategoryType, CategoryType, PageInfo, Faq } from '@/types';
-import { fetchFaqs } from '@/services/faq';
+import { CategoryType, SubCategoryType } from '@/types';
+import { useFaqList } from '@/services/useFAQService';
 import FAQAccordion from '@/components/FAQAccordion';
 
-type FaqListProps = {
-  pageInfo: PageInfo;
+type FAQListProps = {
   category: CategoryType;
   subCategory: SubCategoryType;
 };
 
-export default function FaqList({
-  pageInfo: initialPageInfo,
-  category,
-  subCategory,
-}: FaqListProps) {
-  const [items, setItems] = useState<Faq[]>([]);
-  const [pageInfo, setPageInfo] = useState(initialPageInfo);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const hasMore = pageInfo.offset + pageInfo.limit < pageInfo.totalRecord;
-
-  const loadMoreFaqs = async () => {
-    try {
-      setIsLoading(true);
-      const data = await fetchFaqs(
-        category,
-        subCategory,
-        pageInfo.nextOffset,
-        pageInfo.limit,
-      );
-      setItems((prev) => [...prev, ...data.items]);
-      setPageInfo(data.pageInfo);
-    } catch (error) {
-      console.error('FAQ 로딩 중 에러:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+export default function FAQList({ category, subCategory }: FAQListProps) {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useFaqList({
+    category,
+    subCategory,
+    limit: 10,
+  });
 
   return (
-    <>
-      {items.map((item) => (
-        <FAQAccordion key={item.id} {...item} />
-      ))}
-      {isLoading && <div>로딩 중...</div>}
-      {hasMore && (
-        <button type="button" onClick={loadMoreFaqs} disabled={isLoading}>
+    <ul>
+      {data?.pages.map((page) =>
+        page.items.map(
+          ({ id, categoryName, subCategoryName, question, answer }) => (
+            <FAQAccordion
+              key={id}
+              id={id}
+              categoryName={categoryName}
+              subCategoryName={subCategoryName}
+              question={question}
+              answer={answer}
+            />
+          ),
+        ),
+      )}
+
+      {hasNextPage && (
+        <button
+          onClick={() => fetchNextPage()}
+          disabled={isFetchingNextPage}
+          className="more-button"
+        >
           더보기
         </button>
       )}
-    </>
+    </ul>
   );
 }

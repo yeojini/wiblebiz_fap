@@ -1,7 +1,7 @@
 import { Category, CategoryType, FaqResponse, SubCategoryType } from '@/types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3000';
-console.log(API_BASE_URL);
+
 /**
  * 카테고리별 FAQ 카테고리 목록을 가져옵니다.
  * @param category 'CONSULT' 또는 'USAGE' 카테고리
