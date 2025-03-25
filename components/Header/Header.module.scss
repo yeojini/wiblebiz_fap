@@ -1,0 +1,39 @@
+@use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as breakpoints;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 $side-padding;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #fff;
+  height: $header-height;
+}
+
+.shadow {
+  box-shadow: 0 4px 32px 0 rgba(0, 0, 0, .08);
+}
+
+.sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+}
+
+.logo {
+  width: 120px;
+  height: 40px;
+}
+
+@include breakpoints.desktop {
+  .logo {
+    width: 160px;
+    height: 100%;
+  }
+}

@@ -1,5 +1,4 @@
-@import 'breakpoints';
-
+@use '@/styles/breakpoints' as *;
 :root {
   --mint-900: #70d7bf;
   --mint-700: #8ddfcc;
@@ -261,17 +260,20 @@
   }
 }
 
+html {
+  height: 100%;
+}
+
 html,
 body {
-  height: 100%;
   width: 100%;
-  overflow-x: hidden;
   min-width: 360px;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
