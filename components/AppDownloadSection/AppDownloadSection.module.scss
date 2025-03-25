@@ -1,0 +1,55 @@
+@use '@/styles/colors' as color;
+@use '@/styles/breakpoints' as breakpoint;
+.section {
+  background-color: color.$gray-10;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+  padding: 32px;
+  margin-bottom: 24px;
+  flex-direction: column;
+  align-items: center;
+  font-size: 24px;
+}
+
+.title {
+  font-size: inherit;
+  margin-bottom: 20px;
+}
+
+.emphasis {
+  color: color.$mint-900;
+}
+
+.links {
+  display: flex;
+  gap: 16px;
+}
+
+.link {
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  height: 56px;
+  width: 264px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@include breakpoint.mobile-and-tablet {
+  .section {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+
+  .links {
+    flex-direction: column;
+  }
+
+  .link {
+    font-size: 14px;
+  }
+}
