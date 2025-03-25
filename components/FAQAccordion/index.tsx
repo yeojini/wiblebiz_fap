@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Faq } from '@/types';
 import ArrowIcon from '@/assets/icons/arrow_icon.svg';
-import styles from './FAQAccordion.module.css';
+import styles from './FAQAccordion.module.scss';
 
 type FAQAccordionProps = Faq;
 

@@ -5,7 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ReactQueryProvider from '@/lib/react-query/ReactQueryProvider';
 import MSWComponent from '@/components/MSWComponent';
-import './globals.css';
+import '@/styles/global.scss';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
