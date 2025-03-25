@@ -1,5 +1,4 @@
-@import 'breakpoints';
-
+@use '@/styles/breakpoints' as *;
 :root {
   --mint-900: #70d7bf;
   --mint-700: #8ddfcc;
@@ -261,13 +260,20 @@
   }
 }
 
+html {
+  height: 100%;
+}
+
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  width: 100%;
+  min-width: 360px;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -278,9 +284,33 @@ body {
   margin: 0;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
 a {
   color: inherit;
   text-decoration: none;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button, input {
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 .sr-only {

@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import SearchIcon from '@/assets/icons/search_icon.svg';
 import { searchSchema, type SearchFormData } from '@/schemas/searchSchema';
+import styles from './FAQSection.module.scss';
 
 export default function FAQSection() {
   const [selectedCategory, setSelectedCategory] =
@@ -40,6 +41,12 @@ export default function FAQSection() {
 
   return (
     <section>
+      <h1 className={styles.title}>
+        자주 묻는 질문
+        <em className={styles.description}>
+          궁금하신 내용을 빠르게 찾아보세요.
+        </em>
+      </h1>
       <TabList>
         <TabButton
           id="CONSULT"

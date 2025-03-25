@@ -2,6 +2,7 @@ import ProcessIcon01 from '@/assets/icons/process_icon_01.svg';
 import ProcessIcon02 from '@/assets/icons/process_icon_02.svg';
 import ProcessIcon03 from '@/assets/icons/process_icon_03.svg';
 import ProcessIcon04 from '@/assets/icons/process_icon_04.svg';
+import styles from './ServiceGuideSection.module.scss';
 
 type ProcessStep = {
   id: number;
@@ -40,19 +41,19 @@ const processSteps: ProcessStep[] = [
 
 export default function ServiceGuideSection() {
   return (
-    <section>
-      <h2>이용 프로세스 안내</h2>
-      <ol>
+    <section className={styles.section}>
+      <h2 className={styles.title}>이용 프로세스 안내</h2>
+      <ol className={styles.steps}>
         {processSteps.map((step) => {
           const Icon = step.icon;
           return (
-            <li key={step.id}>
-              {Icon && <Icon />}
+            <li key={step.id} className={styles.step}>
+              <Icon className={styles.icon} />
               <div>
-                <h3>
+                <h3 className={styles.stepTitle}>
                   {step.id}. {step.title}
                 </h3>
-                <p>{step.description}</p>
+                <p className={styles.stepDescription}>{step.description}</p>
               </div>
             </li>
           );

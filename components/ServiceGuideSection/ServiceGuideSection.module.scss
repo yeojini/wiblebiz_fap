@@ -1,0 +1,60 @@
+@use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as breakpoint;
+@use '@/styles/colors' as color;
+.title {
+  font-size: $heading-2;
+  margin: $heading-2-margin;
+}
+
+.steps {
+  display: flex;
+  margin: 0 calc($space-md* -1 / 2);
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  padding: 0 30px;
+}
+
+.icon {
+  display: flex;
+  flex-shrink: 0;
+  height: $ic-xlg;
+  width: $ic-xlg;
+  margin-bottom: 8px;
+}
+
+.stepTitle {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.stepDescription {
+  color: color.$gray-700;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+@include breakpoint.mobile-and-tablet {
+  .steps {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .step {
+    flex-direction: row;
+  }
+}
+
+@include breakpoint.tablet {
+  .icon {
+    margin: 0 16px 0 0;
+  }
+}
+
+@include breakpoint.mobile {
+  .icon {
+    margin: 0 12px 0 0;
+  }
+}

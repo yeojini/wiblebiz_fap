@@ -1,0 +1,68 @@
+@use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as breakpoint;
+@use '@/styles/colors' as color;
+
+.title {
+  font-size: $heading-2;
+  margin: $heading-2-margin;
+}
+
+.links {
+  display: flex;
+  margin: 0 calc($space-md * -1 / 2);
+}
+
+.link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-size: $btn-xxlg-size;
+  font-weight: 600;
+  padding: 0 1.4em;
+  height: $btn-xxlg;
+  min-height: $btn-xxlg;
+  border: 1px solid color.$midnight-900;
+  margin: calc($space-md / 2);
+}
+
+.icon {
+  height: $ic-lg;
+  width: $ic-lg;
+  margin-right: 8px;
+}
+
+.talkText {
+  display: flex;
+  flex-direction: column;
+}
+
+.talkId {
+  font-size: 14px;
+  font-weight: 400;
+  color: color.$gray-500;
+}
+
+@include breakpoint.mobile {
+  .links {
+    flex-direction: column;
+  }
+
+  .link {
+    margin: calc($space-md / 2) 0;
+  }
+}
+
+@include breakpoint.tablet {
+  .links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .link {
+    flex: 0 1 calc(50% - $space-md);
+
+    &:last-child {
+      flex-basis: calc(100% - $space-md);
+    }
+  }
+}
