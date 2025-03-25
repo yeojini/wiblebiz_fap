@@ -1,25 +1,28 @@
 'use client';
 
-import { useTabContext } from '@/hooks/useTabContext';
-
 type TabButtonProps = {
   id: string;
   children: React.ReactNode;
   className?: string;
+  selected?: boolean;
+  onClick?: () => void;
 };
 
-export default function TabButton({ id, children, className }: TabButtonProps) {
-  const { activeTab, setActiveTab } = useTabContext();
-  const isActive = activeTab === id;
-
+export default function TabButton({
+  id,
+  children,
+  className,
+  selected,
+  onClick,
+}: TabButtonProps) {
   return (
     <button
       id={`tab-${id}`}
       role="tab"
-      aria-selected={isActive}
+      aria-selected={selected}
       aria-controls={`panel-${id}`}
       className={className}
-      onClick={() => setActiveTab(id)}
+      onClick={onClick}
     >
       {children}
     </button>

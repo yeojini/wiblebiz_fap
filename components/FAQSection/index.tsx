@@ -1,38 +1,82 @@
-import Tab from '@/components/common/Tab';
+'use client';
+
 import TabList from '@/components/common/TabList';
 import TabButton from '@/components/common/TabButton';
-import CategoryTabPanel from '@/components/CategoryTabPanel';
-import PrefetchBoundary from '@/lib/react-query/PrefetchBoundary';
-import { QUERY_KEYS } from '@/services/queryKeys';
-import { fetchCategories } from '@/services/faq';
-import SearchBar from '@/components/SearchBar';
-import SearchProvider from '@/components/SearchProvider';
+import { useId, useState } from 'react';
+import { CategoryType, SubCategoryType } from '@/types';
+import FAQList from '@/components/FAQList';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import SearchIcon from '@/assets/icons/search_icon.svg';
+import { searchSchema, type SearchFormData } from '@/schemas/searchSchema';
 
-export default async function FAQSection() {
+export default function FAQSection() {
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategoryType>('CONSULT');
+  const [selectedSubCategory, setSelectedSubCategory] =
+    useState<SubCategoryType>('ALL');
+  const searchInputId = useId();
+  const [query, setQuery] = useState('');
+
+  const { register, handleSubmit, reset } = useForm<SearchFormData>({
+    resolver: zodResolver(searchSchema),
+    defaultValues: {
+      search: '',
+    },
+    mode: 'onSubmit',
+  });
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSubmit((data) => {
+      setQuery(data.search);
+    })(e);
+  };
+
+  const handleResetSearch = () => {
+    setQuery('');
+    reset();
+  };
+
   return (
-    <Tab defaultTab="CONSULT">
+    <section>
       <TabList>
-        <TabButton id="CONSULT">서비스 도입</TabButton>
-        <TabButton id="USAGE">서비스 이용</TabButton>
-      </TabList>
-      <SearchProvider>
-        <SearchBar />
-        <PrefetchBoundary
-          fetchQueryOptions={[
-            {
-              queryKey: QUERY_KEYS.FAQ.CATEGORIES('CONSULT'),
-              queryFn: () => fetchCategories('CONSULT'),
-            },
-            {
-              queryKey: QUERY_KEYS.FAQ.CATEGORIES('USAGE'),
-              queryFn: () => fetchCategories('USAGE'),
-            },
-          ]}
+        <TabButton
+          id="CONSULT"
+          selected={selectedCategory === 'CONSULT'}
+          onClick={() => setSelectedCategory('CONSULT')}
         >
-          <CategoryTabPanel category="CONSULT" />
-          <CategoryTabPanel category="USAGE" />
-        </PrefetchBoundary>
-      </SearchProvider>
-    </Tab>
+          서비스 도입
+        </TabButton>
+        <TabButton
+          id="USAGE"
+          selected={selectedCategory === 'USAGE'}
+          onClick={() => setSelectedCategory('USAGE')}
+        >
+          서비스 이용
+        </TabButton>
+      </TabList>
+      <form onSubmit={onSubmit}>
+        <label htmlFor={searchInputId} className="sr-only">
+          검색
+        </label>
+        <input
+          id={searchInputId}
+          type="text"
+          placeholder="찾으시는 내용을 입력해 주세요"
+          {...register('search')}
+        />
+        <button type="submit" aria-label="검색하기">
+          <SearchIcon />
+        </button>
+      </form>
+      <FAQList
+        category={selectedCategory}
+        subCategory={selectedSubCategory}
+        query={query}
+        onResetSearch={handleResetSearch}
+        onSelectSubCategory={setSelectedSubCategory}
+      />
+    </section>
   );
 }
