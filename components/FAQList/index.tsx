@@ -5,22 +5,19 @@ import { useFaqList } from '@/services/useFAQService';
 import FAQAccordion from '@/components/FAQAccordion';
 import ResetIcon from '@/assets/icons/reset_icon.svg';
 import SubCategoryTabList from '@/components/SubCategoryTabList';
+import { useTabContext } from '@/hooks/useTabContext';
+import { useSearchContext } from '@/hooks/useSearchContext';
+import { useFormContext } from 'react-hook-form';
 
 type FAQListProps = {
   category: CategoryType;
-  subCategory: SubCategoryType;
-  query: string;
-  onResetSearch: () => void;
-  onSelectSubCategory: (subCategory: SubCategoryType) => void;
 };
 
-export default function FAQList({
-  category,
-  subCategory,
-  query,
-  onSelectSubCategory,
-  onResetSearch,
-}: FAQListProps) {
+export default function FAQList({ category }: FAQListProps) {
+  const { query, setQuery } = useSearchContext();
+  const { reset } = useFormContext();
+  const { activeTab } = useTabContext();
+  const subCategory = activeTab as SubCategoryType;
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useFaqList({
     category,
     subCategory,
@@ -28,22 +25,23 @@ export default function FAQList({
     query,
   });
 
+  const handleResetSearch = () => {
+    setQuery('');
+    reset();
+  };
+
   return (
     <>
       {query && (
         <div>
           <span>검색 결과 총 {data?.pages[0].items.length}건</span>
-          <button onClick={onResetSearch}>
+          <button onClick={handleResetSearch}>
             <ResetIcon />
             검색 초기화
           </button>
         </div>
       )}
-      <SubCategoryTabList
-        category={category}
-        selectedSubCategory={subCategory}
-        onSelectSubCategory={onSelectSubCategory}
-      />
+      <SubCategoryTabList category={category} />
       {query && data?.pages[0].items.length === 0 && (
         <p>검색 결과가 없습니다.</p>
       )}
