@@ -1,0 +1,76 @@
+// 브레이크포인트 값 정의
+$breakpoints: (
+  mobile: 743px,   // 모바일 최대 너비
+  tablet: 1023px,  // 태블릿 최대 너비
+  desktop: 1439px  // 소형 데스크탑 최대 너비
+);
+
+/**
+ * 모바일 장치에만 적용되는 스타일
+ * 최대 너비: 743px
+ */
+@mixin mobile {
+  @media (max-width: map-get($breakpoints, mobile)) {
+    @content;
+  }
+}
+
+/**
+ * 태블릿 장치에만 적용되는 스타일
+ * 너비 범위: 744px ~ 1023px
+ */
+@mixin tablet {
+  @media (min-width: #{map-get($breakpoints, mobile) + 1px}) and (max-width: #{map-get($breakpoints, tablet)}) {
+    @content;
+  }
+}
+
+/**
+ * 모바일 및 태블릿에 적용되는 스타일 (태블릿 이하)
+ * 최대 너비: 1023px
+ */
+@mixin mobile-and-tablet {
+  @media (max-width: map-get($breakpoints, tablet)) {
+    @content;
+  }
+}
+
+/**
+ * 태블릿 및 데스크탑에 적용되는 스타일 (태블릿 이상)
+ * 최소 너비: 744px
+ */
+@mixin tablet-and-desktop {
+  @media (min-width: #{map-get($breakpoints, mobile) + 1px}) {
+    @content;
+  }
+}
+
+/**
+ * 소형 데스크탑에만 적용되는 스타일
+ * 너비 범위: 1024px ~ 1439px
+ */
+@mixin desktop-sm {
+  @media (min-width: #{map-get($breakpoints, tablet) + 1px}) and (max-width: #{map-get($breakpoints, desktop)}) {
+    @content;
+  }
+}
+
+/**
+ * 대형 데스크탑에만 적용되는 스타일
+ * 최소 너비: 1440px
+ */
+@mixin desktop-lg {
+  @media (min-width: #{map-get($breakpoints, desktop) + 1px}) {
+    @content;
+  }
+}
+
+/**
+ * 모든 데스크탑에 적용되는 스타일 (소형 및 대형)
+ * 최소 너비: 1024px
+ */
+@mixin desktop {
+  @media (min-width: #{map-get($breakpoints, tablet) + 1px}) {
+    @content;
+  }
+}
