@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ReactQueryProvider from '@/lib/react-query/ReactQueryProvider';
 import MSWComponent from '@/components/MSWComponent';
+import styles from './layout.module.scss';
 import '@/styles/global.scss';
 
 const geistSans = Geist({
@@ -33,7 +34,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <MSWComponent />
           <Header />
-          {children}
+          <div className={styles.container}>{children}</div>
           <Footer />
         </ReactQueryProvider>
       </body>
