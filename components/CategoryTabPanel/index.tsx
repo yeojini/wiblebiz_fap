@@ -1,20 +1,20 @@
+'use client';
+
 import { CategoryType } from '@/types';
 import Tab from '@/components/common/Tab';
 import TabList from '@/components/common/TabList';
 import TabButton from '@/components/common/TabButton';
 import TabPanel from '@/components/common/TabPanel';
-import SubCategoryTabPanel from '@/components/SubCategoryTabPanel';
 import SearchBar from '@/components/SearchBar';
-import { fetchCategories } from '@/services';
+import { useFaqCategories } from '@/services/useFAQService';
+import FAQList from '@/components/FAQList';
 
 type CategoryTabPanelProps = {
   category: CategoryType;
 };
 
-export default async function CategoryTabPanel({
-  category,
-}: CategoryTabPanelProps) {
-  const data = await fetchCategories(category);
+export default function CategoryTabPanel({ category }: CategoryTabPanelProps) {
+  const { data } = useFaqCategories(category);
 
   return (
     <TabPanel id={category}>
@@ -22,19 +22,19 @@ export default async function CategoryTabPanel({
         <SearchBar />
         <TabList>
           <TabButton id="ALL">전체</TabButton>
-          {data.map((item) => (
+          {data?.map((item) => (
             <TabButton key={item.categoryID} id={item.categoryID}>
               {item.name}
             </TabButton>
           ))}
         </TabList>
-        <SubCategoryTabPanel category={category} subCategory="ALL" />
-        {data.map((item) => (
-          <SubCategoryTabPanel
-            key={item.categoryID}
-            category={category}
-            subCategory={item.categoryID}
-          />
+        <TabPanel id="ALL">
+          <FAQList category={category} subCategory="ALL" />
+        </TabPanel>
+        {data?.map((item) => (
+          <TabPanel key={item.categoryID} id={item.categoryID}>
+            <FAQList category={category} subCategory={item.categoryID} />
+          </TabPanel>
         ))}
       </Tab>
     </TabPanel>
