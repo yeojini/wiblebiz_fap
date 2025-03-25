@@ -7,6 +7,7 @@ import {
   ConsultFaqCategoryType,
   UsageFaqCategoryType,
   Faq,
+  SubCategoryType,
 } from '@/types';
 import { createResponse } from '@/utils/pagination';
 
@@ -37,7 +38,35 @@ export const handlers = [
     const limit = Number(url.searchParams.get('limit') || '10');
     const offset = Number(url.searchParams.get('offset') || '0');
     const tab = url.searchParams.get('tab') as CategoryType | null;
-    const faqCategoryID = url.searchParams.get('faqCategoryID');
+    const faqCategoryID = url.searchParams.get(
+      'faqCategoryID',
+    ) as SubCategoryType | null;
+    const query = url.searchParams.get('query');
+
+    if (query) {
+      if (!tab) {
+        return HttpResponse.json(createResponse([], offset, limit));
+      }
+
+      if (!faqCategoryID) {
+        const allFaqs = tab === 'CONSULT' ? consultFaqs : usageFaqs;
+        const allFaqsArray = Object.values(allFaqs).flat();
+        const filteredFaqs = allFaqsArray.filter(
+          (faq) => faq.question.includes(query) || faq.answer.includes(query),
+        );
+        return HttpResponse.json(createResponse(filteredFaqs, offset, limit));
+      }
+
+      const faqsToSearch =
+        tab === 'CONSULT'
+          ? consultFaqs[faqCategoryID as ConsultFaqCategoryType]
+          : usageFaqs[faqCategoryID as UsageFaqCategoryType];
+      const filteredFaqs = faqsToSearch.filter(
+        (faq) => faq.question.includes(query) || faq.answer.includes(query),
+      );
+
+      return HttpResponse.json(createResponse(filteredFaqs, offset, limit));
+    }
 
     if (tab === 'CONSULT') {
       if (!faqCategoryID) {
