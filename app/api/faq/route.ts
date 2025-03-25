@@ -18,6 +18,32 @@ export async function GET(request: NextRequest) {
   const offset = Number(searchParams.get('offset') || '0');
   const tab = searchParams.get('tab') as CategoryType | null;
   const faqCategoryID = searchParams.get('faqCategoryID');
+  const query = searchParams.get('query');
+
+  if (query) {
+    if (!tab) {
+      return NextResponse.json(createResponse([], offset, limit));
+    }
+
+    if (!faqCategoryID) {
+      const allFaqs = tab === 'CONSULT' ? consultFaqs : usageFaqs;
+      const allFaqsArray = Object.values(allFaqs).flat();
+      const filteredFaqs = allFaqsArray.filter(
+        (faq) => faq.question.includes(query) || faq.answer.includes(query),
+      );
+      return NextResponse.json(createResponse(filteredFaqs, offset, limit));
+    }
+
+    const faqsToSearch =
+      tab === 'CONSULT'
+        ? consultFaqs[faqCategoryID as ConsultFaqCategoryType]
+        : usageFaqs[faqCategoryID as UsageFaqCategoryType];
+    const filteredFaqs = faqsToSearch.filter(
+      (faq) => faq.question.includes(query) || faq.answer.includes(query),
+    );
+
+    return NextResponse.json(createResponse(filteredFaqs, offset, limit));
+  }
 
   if (tab === 'CONSULT') {
     if (!faqCategoryID) {

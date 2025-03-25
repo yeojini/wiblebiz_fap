@@ -4,17 +4,18 @@ import { CategoryType, SubCategoryType } from '@/types';
 import { useFaqList } from '@/services/useFAQService';
 import FAQAccordion from '@/components/FAQAccordion';
 import useSearchContext from '@/hooks/useSearchContext';
+import { useTabContext } from '@/hooks/useTabContext';
 
 type FAQListProps = {
   category: CategoryType;
-  subCategory: SubCategoryType;
 };
 
-export default function FAQList({ category, subCategory }: FAQListProps) {
+export default function FAQList({ category }: FAQListProps) {
   const { query } = useSearchContext();
+  const { activeTab } = useTabContext();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useFaqList({
     category,
-    subCategory,
+    subCategory: activeTab as SubCategoryType,
     limit: 10,
     query,
   });
