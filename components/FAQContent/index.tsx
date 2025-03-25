@@ -5,6 +5,7 @@ import { useSearchContext } from '@/hooks/useSearchContext';
 import TabList from '@/components/common/TabList';
 import TabButton from '@/components/common/TabButton';
 import { useFormContext } from 'react-hook-form';
+import styles from './FAQContent.module.scss';
 
 export default function FAQContent() {
   const { setQuery } = useSearchContext();
@@ -17,9 +18,13 @@ export default function FAQContent() {
 
   return (
     <Tab defaultTab="CONSULT" onChange={handleTabChange}>
-      <TabList>
-        <TabButton id="CONSULT">서비스 도입</TabButton>
-        <TabButton id="USAGE">서비스 이용</TabButton>
+      <TabList className={styles.tabList}>
+        <TabButton className={styles.tabButton} id="CONSULT">
+          서비스 도입
+        </TabButton>
+        <TabButton className={styles.tabButton} id="USAGE">
+          서비스 이용
+        </TabButton>
       </TabList>
       <SearchBar />
       <CategoryTabPanel />
