@@ -29,8 +29,7 @@ jobs:
       - name: Run tests
         run: pnpm test
 
-      # 현재 개발 환경/프로덕션 환경에서는 Next.js의 API 라우트로 API를 모킹, 테스트 환경에서는 MSW로 API를 모킹하고 있으나
-      # 하지만 CI 환경에서는 실제 서버가 실행되고 있지 않아 API 라우트를 통한 데이터 요청이 실패하여 빌드 불가능
-      # 실제 API 연동 후 빌드 스텝 활성화 필요
-      # - name: Build
-      #   run: pnpm build
+      - name: Build
+        env:
+          NEXT_PUBLIC_ENABLE_MSW: 'true'
+        run: pnpm build
