@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { SubCategoryType, CategoryType, PageInfo, Faq } from '@/types';
-import { fetchFaqs } from '@/services';
+import { fetchFaqs } from '@/services/faq';
 import FAQAccordion from '@/components/FAQAccordion';
 
 type FaqListProps = {
