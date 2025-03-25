@@ -1,0 +1,39 @@
+@use '@/styles/variables' as *;
+@use '@/styles/colors' as color;
+@use '@/styles/breakpoints' as breakpoint;
+
+.container {
+  display: flex;
+  background-color: color.$gray-10;
+  justify-content: center;
+  margin-bottom: $px-md;
+  padding: $px-md;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  width: $search-bar-width;
+  border: 1px solid color.$midnight-900;
+  padding: 0 8px 0 16px;
+  background-color: #fff;
+}
+
+.input {
+  flex: 1;
+  height: 46px;
+  outline: none;
+}
+
+.button {
+  width: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@include breakpoint.mobile {
+  .container {
+    padding: 0;
+  }
+}
