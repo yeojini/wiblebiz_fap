@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
-import { SearchContext } from '@/components/SearchProvider';
+import { SearchContext } from '@/components/SearchFormProvider';
 
 export function useSearchContext() {
   const context = useContext(SearchContext);
