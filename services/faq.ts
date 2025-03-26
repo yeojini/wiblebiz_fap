@@ -12,6 +12,9 @@ export async function fetchCategories(
 ): Promise<Category[]> {
   const response = await fetch(
     `${API_BASE_URL}/api/faq/category?tab=${category}`,
+    {
+      cache: 'no-store',
+    },
   );
 
   if (!response.ok) {
@@ -53,6 +56,9 @@ export async function fetchFaqs(
 
   const response = await fetch(
     `${API_BASE_URL}/api/faq?${queryParams.toString()}`,
+    {
+      cache: 'no-store',
+    },
   );
 
   if (!response.ok) {
