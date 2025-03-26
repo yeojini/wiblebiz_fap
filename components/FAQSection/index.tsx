@@ -41,7 +41,9 @@ export default function FAQSection() {
             {Object.keys(FAQ_CATEGORIES).map((key) => (
               <TabPanel id={key} key={key}>
                 <SubCategoryTab category={key as CategoryType}>
-                  <FAQList category={key as CategoryType} />
+                  <QueryErrorSuspenseBoundary>
+                    <FAQList category={key as CategoryType} />
+                  </QueryErrorSuspenseBoundary>
                 </SubCategoryTab>
               </TabPanel>
             ))}
