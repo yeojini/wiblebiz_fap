@@ -9,7 +9,9 @@ import FAQList from '@/components/FAQList';
 import SearchBar from '@/components/SearchBar';
 import SearchResult from '@/components/common/SearchResult';
 import QueryErrorSuspenseBoundary from '@/components/QueryErrorSuspenseBoundary';
-
+import PrefetchBoundary from '@/lib/react-query/PrefetchBoundary';
+import { QUERY_KEYS } from '@/services/queryKeys';
+import { fetchCategories, fetchFaqs } from '@/services/faq';
 import styles from './FAQSection.module.scss';
 
 const FAQ_CATEGORIES: Record<CategoryType, string> = {
@@ -38,15 +40,35 @@ export default function FAQSection() {
           <SearchBar />
           <SearchResult />
           <QueryErrorSuspenseBoundary>
-            {Object.keys(FAQ_CATEGORIES).map((key) => (
-              <TabPanel id={key} key={key}>
-                <SubCategoryTab category={key as CategoryType}>
-                  <QueryErrorSuspenseBoundary>
-                    <FAQList category={key as CategoryType} />
-                  </QueryErrorSuspenseBoundary>
-                </SubCategoryTab>
-              </TabPanel>
-            ))}
+            <PrefetchBoundary
+              fetchQueryOptions={[
+                {
+                  type: 'query',
+                  options: {
+                    queryKey: QUERY_KEYS.FAQ.CATEGORIES('CONSULT'),
+                    queryFn: () => fetchCategories('CONSULT'),
+                  },
+                },
+                {
+                  type: 'infinite',
+                  options: {
+                    queryKey: QUERY_KEYS.FAQ.LIST('CONSULT', 'ALL'),
+                    queryFn: () => fetchFaqs('CONSULT', 'ALL'),
+                    initialPageParam: 0,
+                  },
+                },
+              ]}
+            >
+              {Object.keys(FAQ_CATEGORIES).map((key) => (
+                <TabPanel id={key} key={key}>
+                  <SubCategoryTab category={key as CategoryType}>
+                    <QueryErrorSuspenseBoundary>
+                      <FAQList category={key as CategoryType} />
+                    </QueryErrorSuspenseBoundary>
+                  </SubCategoryTab>
+                </TabPanel>
+              ))}
+            </PrefetchBoundary>
           </QueryErrorSuspenseBoundary>
         </CategoryTab>
       </SearchFormProvider>
