@@ -1,0 +1,26 @@
+@use '@/styles/variables' as *;
+@use '@/styles/colors' as color;
+
+.searchResult {
+  display: flex;
+  justify-content: space-between;
+  margin: $px-md 0;
+  font-size: $heading-info;
+}
+
+.searchResultText {
+  font-weight: bold;
+}
+
+.searchResultCount {
+  margin-left: 4px;
+  font-weight: 700;
+  color: color.$mint-900;
+}
+
+.resetButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 16px;
+}

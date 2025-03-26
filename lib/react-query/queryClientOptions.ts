@@ -5,6 +5,7 @@ const queryClientOptions = {
     queries: {
       staleTime: 1000 * 60,
     },
+    throwOnError: true,
     dehydrate: {
       shouldDehydrateQuery: (query: Query) =>
         defaultShouldDehydrateQuery(query) || query.state.status === 'pending',

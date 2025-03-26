@@ -1,5 +1,3 @@
-'use client';
-
 type TabListProps = {
   children: React.ReactNode;
   ariaLabel?: string;

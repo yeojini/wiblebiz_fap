@@ -1,57 +1,40 @@
 'use client';
 
+import { useEffect } from 'react';
 import FAQAccordion from '@/components/FAQAccordion';
-import ResetIcon from '@/assets/icons/reset_icon.svg';
-import SubCategoryTabList from '@/components/SubCategoryTabList';
 import NoDataIcon from '@/assets/icons/no_data_icon.svg';
 import { useFaqList } from '@/services/useFAQService';
 import { useTabContext } from '@/hooks/useTabContext';
 import { useSearchContext } from '@/hooks/useSearchContext';
-import { useFormContext } from 'react-hook-form';
 import { CategoryType, SubCategoryType } from '@/types';
 import styles from './FAQList.module.scss';
+import Loading from '@/components/common/Loading';
 
 type FAQListProps = {
   category: CategoryType;
 };
 
 export default function FAQList({ category }: FAQListProps) {
-  const { query, setQuery } = useSearchContext();
-  const { reset } = useFormContext();
+  const { query, setSearchResult } = useSearchContext();
   const { activeTab } = useTabContext();
   const subCategory = activeTab as SubCategoryType;
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useFaqList({
-    category,
-    subCategory,
-    limit: 10,
-    query,
-  });
 
-  const handleResetSearch = () => {
-    setQuery('');
-    reset();
-  };
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isFetching } =
+    useFaqList({
+      category,
+      subCategory,
+      limit: 10,
+      query,
+    });
+
+  useEffect(() => {
+    setSearchResult(data?.pages[0].items.length);
+  }, [data?.pages[0].items.length]);
 
   const noResult = query && data?.pages[0].items.length === 0;
 
   return (
     <>
-      {query && (
-        <div className={styles.searchResult}>
-          <p className={styles.searchResultText}>
-            검색 결과 총
-            <span className={styles.searchResultCount}>
-              {data?.pages[0].items.length}
-            </span>
-            건
-          </p>
-          <button onClick={handleResetSearch} className={styles.resetButton}>
-            <ResetIcon width={24} height={24} />
-            검색 초기화
-          </button>
-        </div>
-      )}
-      <SubCategoryTabList category={category} />
       <ul className={`${styles.faqList} ${noResult && styles.noResult}`}>
         {noResult && (
           <div className={styles.noResultContent}>
@@ -74,7 +57,9 @@ export default function FAQList({ category }: FAQListProps) {
               ),
             ),
           )}
-        {hasNextPage && (
+        {isFetching ? (
+          <Loading />
+        ) : hasNextPage ? (
           <button
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
@@ -83,6 +68,8 @@ export default function FAQList({ category }: FAQListProps) {
             <span className={styles.plusIcon} />
             더보기
           </button>
+        ) : (
+          <></>
         )}
       </ul>
     </>

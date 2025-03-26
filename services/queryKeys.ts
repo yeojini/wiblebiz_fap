@@ -8,6 +8,6 @@ export const QUERY_KEYS = {
       category: CategoryType,
       subCategory: SubCategoryType,
       query?: string,
-    ) => ['faq', 'list', category, subCategory, query] as const,
+    ) => ['faq', 'list', category, subCategory, query].filter(Boolean),
   },
 } as const;

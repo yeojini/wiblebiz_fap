@@ -1,21 +1,25 @@
-'use client';
-
-import { FormProvider, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { searchSchema, type SearchFormData } from '@/schemas/searchSchema';
-import SearchProvider from '@/components/SearchProvider';
-import FAQContent from '@/components/FAQContent';
+import { CategoryType } from '@/types';
+import SearchFormProvider from '@/components/SearchFormProvider';
+import CategoryTab from '@/components/CategoryTab';
+import TabList from '@/components/common/TabList';
+import TabButton from '@/components/common/TabButton';
+import TabPanel from '@/components/common/TabPanel';
+import SubCategoryTab from '@/components/SubCategoryTab';
+import FAQList from '@/components/FAQList';
+import SearchBar from '@/components/SearchBar';
+import SearchResult from '@/components/common/SearchResult';
+import QueryErrorSuspenseBoundary from '@/components/QueryErrorSuspenseBoundary';
+import PrefetchBoundary from '@/lib/react-query/PrefetchBoundary';
+import { QUERY_KEYS } from '@/services/queryKeys';
+import { fetchCategories, fetchFaqs } from '@/services/faq';
 import styles from './FAQSection.module.scss';
 
-export default function FAQSection() {
-  const methods = useForm<SearchFormData>({
-    resolver: zodResolver(searchSchema),
-    defaultValues: {
-      search: '',
-    },
-    mode: 'onSubmit',
-  });
+const FAQ_CATEGORIES: Record<CategoryType, string> = {
+  CONSULT: '서비스 도입',
+  USAGE: '서비스 이용',
+} as const;
 
+export default function FAQSection() {
   return (
     <section>
       <h1 className={styles.title}>
@@ -24,11 +28,50 @@ export default function FAQSection() {
           궁금하신 내용을 빠르게 찾아보세요.
         </em>
       </h1>
-      <FormProvider {...methods}>
-        <SearchProvider>
-          <FAQContent />
-        </SearchProvider>
-      </FormProvider>
+      <SearchFormProvider>
+        <CategoryTab>
+          <TabList className={styles.tabList}>
+            {Object.entries(FAQ_CATEGORIES).map(([key, value]) => (
+              <TabButton className={styles.tabButton} id={key} key={key}>
+                {value}
+              </TabButton>
+            ))}
+          </TabList>
+          <SearchBar />
+          <SearchResult />
+          <QueryErrorSuspenseBoundary>
+            <PrefetchBoundary
+              fetchQueryOptions={[
+                {
+                  type: 'query',
+                  options: {
+                    queryKey: QUERY_KEYS.FAQ.CATEGORIES('CONSULT'),
+                    queryFn: () => fetchCategories('CONSULT'),
+                  },
+                },
+                {
+                  type: 'infinite',
+                  options: {
+                    queryKey: QUERY_KEYS.FAQ.LIST('CONSULT', 'ALL'),
+                    queryFn: () => fetchFaqs('CONSULT', 'ALL'),
+                    initialPageParam: 0,
+                  },
+                },
+              ]}
+            >
+              {Object.keys(FAQ_CATEGORIES).map((key) => (
+                <TabPanel id={key} key={key}>
+                  <SubCategoryTab category={key as CategoryType}>
+                    <QueryErrorSuspenseBoundary>
+                      <FAQList category={key as CategoryType} />
+                    </QueryErrorSuspenseBoundary>
+                  </SubCategoryTab>
+                </TabPanel>
+              ))}
+            </PrefetchBoundary>
+          </QueryErrorSuspenseBoundary>
+        </CategoryTab>
+      </SearchFormProvider>
     </section>
   );
 }

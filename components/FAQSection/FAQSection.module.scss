@@ -19,3 +19,23 @@
   word-break: keep-all;
   font-style: normal;
 }
+
+.tabList {
+  display: flex;
+  margin-bottom: $px-lg;
+  height: $btn-xlg2;
+}
+
+.tabButton {
+  flex: 1;
+  background-color: #fff;
+  border: 1px solid color.$midnight-100;
+  font-weight: 600;
+  font-size: $tab-fsize;
+}
+
+.tabButton[aria-selected='true'] {
+  border-color: color.$midnight-900;
+  background-color: color.$midnight-900;
+  color: #fff;
+}
