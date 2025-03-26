@@ -1,0 +1,25 @@
+@use '@/styles/variables' as *;
+@use '@/styles/breakpoints' as breakpoint;
+@use '@/styles/colors' as color;
+
+.tabList {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.tabButton {
+  height: $btn-md;
+  min-width: $btn-md;
+  border-radius: calc($btn-md / 2);
+  font-weight: 600;
+  text-align: center;
+  padding: 0 $space-sm;
+  font-size: 16px;
+}
+
+.tabButton[aria-selected='true'] {
+  background-color: color.$mint-900;
+  color: #fff;
+}
+

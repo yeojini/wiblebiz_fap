@@ -3,20 +3,30 @@
 import { useState } from 'react';
 import { TabContext } from '@/hooks/useTabContext';
 
-type TabProps = {
+interface TabProps {
+  defaultTab?: string;
+  onChange?: (tabId: string) => void;
   children: React.ReactNode;
-  defaultTab: string;
-  className?: string;
-};
+}
 
-export const Tab = ({ children, defaultTab, className }: TabProps) => {
+export default function Tab({ defaultTab = '', onChange, children }: TabProps) {
   const [activeTab, setActiveTab] = useState(defaultTab);
 
+  const handleTabChange = (tabId: string) => {
+    if (activeTab !== tabId) {
+      setActiveTab(tabId);
+      onChange?.(tabId);
+    }
+  };
+
   return (
-    <TabContext.Provider value={{ activeTab, setActiveTab }}>
-      <div className={className}>{children}</div>
+    <TabContext.Provider
+      value={{
+        activeTab,
+        setActiveTab: handleTabChange,
+      }}
+    >
+      {children}
     </TabContext.Provider>
   );
-};
-
-export default Tab;
+}

@@ -28,15 +28,18 @@ export default function FAQAccordion({
             <ArrowIcon
               className={styles.arrowRight}
               fill="currentColor"
-              viewBox="0 0 24px 24px"
+              width={18}
+              height={18}
             />
-            <span className={styles.subCategory}>{subCategoryName}</span>
+            <span className={styles.category}>{subCategoryName}</span>
           </div>
-          <div className={styles.question}>{question}</div>
+          <p className={styles.question}>{question}</p>
         </div>
         <ArrowIcon className={`${styles.icon} ${isOpen && styles.up}`} />
       </button>
-      {isOpen && <div className={styles.content}>{answer}</div>}
+      <div className={`${styles.content} ${isOpen && styles.open}`}>
+        {isOpen && <p className={styles.answer}>{answer}</p>}
+      </div>
     </li>
   );
 }

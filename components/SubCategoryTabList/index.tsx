@@ -1,36 +1,28 @@
 import TabList from '@/components/common/TabList';
 import TabButton from '@/components/common/TabButton';
-import { CategoryType, SubCategoryType } from '@/types';
+import { CategoryType } from '@/types';
 import { useFaqCategories } from '@/services/useFAQService';
+import styles from './SubCategoryTabList.module.scss';
 
 type SubCategoryTabListProps = {
   category: CategoryType;
-  selectedSubCategory: SubCategoryType;
-  onSelectSubCategory: (subCategory: SubCategoryType) => void;
 };
 
 export default function SubCategoryTabList({
   category,
-  selectedSubCategory,
-  onSelectSubCategory,
 }: SubCategoryTabListProps) {
   const { data } = useFaqCategories(category);
 
   return (
-    <TabList>
-      <TabButton
-        id="ALL"
-        selected={selectedSubCategory === 'ALL'}
-        onClick={() => onSelectSubCategory('ALL')}
-      >
+    <TabList className={styles.tabList}>
+      <TabButton id="ALL" className={styles.tabButton}>
         전체
       </TabButton>
       {data?.map((item) => (
         <TabButton
           key={item.categoryID}
           id={item.categoryID}
-          selected={selectedSubCategory === item.categoryID}
-          onClick={() => onSelectSubCategory(item.categoryID)}
+          className={styles.tabButton}
         >
           {item.name}
         </TabButton>
