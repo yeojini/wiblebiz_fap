@@ -92,17 +92,18 @@
 }
 
 .content {
+  max-height: 0;
   border-top: 1px solid color.$gray-100;
   font-size: 1rem;
   font-color: rgba(106, 122, 135, 1);
-  transition: all 0.3s ease-in-out;
-  max-height: 0;
   overflow: hidden;
-}
+  visibility: hidden;
+  transition: all 0.5s ease-out;
 
-.content.open {
-  display: block;
-  max-height: 1000px;
+  &.open {
+    max-height: 500px;
+    visibility: visible;
+  }
 }
 
 .answer {

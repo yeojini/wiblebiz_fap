@@ -38,7 +38,7 @@ export default function FAQAccordion({
         <ArrowIcon className={`${styles.icon} ${isOpen && styles.up}`} />
       </button>
       <div className={`${styles.content} ${isOpen && styles.open}`}>
-        <p className={styles.answer}>{answer}</p>
+        {isOpen && <p className={styles.answer}>{answer}</p>}
       </div>
     </li>
   );
