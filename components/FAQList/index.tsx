@@ -10,6 +10,7 @@ import { useSearchContext } from '@/hooks/useSearchContext';
 import { useFormContext } from 'react-hook-form';
 import { CategoryType, SubCategoryType } from '@/types';
 import styles from './FAQList.module.scss';
+import Loading from '@/components/common/Loading';
 
 type FAQListProps = {
   category: CategoryType;
@@ -20,12 +21,13 @@ export default function FAQList({ category }: FAQListProps) {
   const { reset } = useFormContext();
   const { activeTab } = useTabContext();
   const subCategory = activeTab as SubCategoryType;
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useFaqList({
-    category,
-    subCategory,
-    limit: 10,
-    query,
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isFetching } =
+    useFaqList({
+      category,
+      subCategory,
+      limit: 10,
+      query,
+    });
 
   const handleResetSearch = () => {
     setQuery('');
@@ -74,7 +76,9 @@ export default function FAQList({ category }: FAQListProps) {
               ),
             ),
           )}
-        {hasNextPage && (
+        {isFetching ? (
+          <Loading />
+        ) : hasNextPage ? (
           <button
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
@@ -83,6 +87,8 @@ export default function FAQList({ category }: FAQListProps) {
             <span className={styles.plusIcon} />
             더보기
           </button>
+        ) : (
+          <></>
         )}
       </ul>
     </>
