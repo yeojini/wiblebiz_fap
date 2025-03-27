@@ -19,6 +19,7 @@ const usageFaqs = usageFaqsData as Record<UsageFaqCategoryType, Faq[]>;
 
 export const handlers = [
   http.get(`${baseUrl}/api/faq/category`, async ({ request }) => {
+    console.log('get /api/faq/category');
     const url = new URL(request.url);
     const tab = url.searchParams.get('tab') as CategoryType | null;
 
