@@ -23,5 +23,24 @@ export default defineConfig({
     env: {
       NEXT_PUBLIC_API_URL: 'http://localhost:3000',
     },
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      include: [
+        'components/**/*.{ts,tsx}',
+        'services/**/*.ts',
+        'hooks/**/*.ts',
+      ],
+      exclude: [
+        'app/**/*.{ts,tsx}',
+        '**/*.test.{ts,tsx}',
+        '**/*.d.ts',
+        'node_modules/**',
+        'dist/**',
+        '**/*.config.{js,ts,mts}',
+        '**/types/**',
+      ],
+      all: true,
+    },
   },
 });
