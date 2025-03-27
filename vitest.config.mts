@@ -21,7 +21,7 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     globals: true,
     env: {
-      NEXT_PUBLIC_API_URL: 'http://localhost:3000',
+      NEXT_PUBLIC_API_URL: 'http://api.example.com',
     },
     coverage: {
       provider: 'v8',

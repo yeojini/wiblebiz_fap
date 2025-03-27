@@ -11,15 +11,14 @@ import {
 } from '@/types';
 import { createResponse } from '@/utils/pagination';
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://api.example.com';
 
 const { CONSULT, USAGE } = categoriesData;
 const consultFaqs = consultFaqsData as Record<ConsultFaqCategoryType, Faq[]>;
 const usageFaqs = usageFaqsData as Record<UsageFaqCategoryType, Faq[]>;
 
 export const handlers = [
-  http.get(`${baseUrl}/api/faq/category`, async ({ request }) => {
-    console.log('get /api/faq/category');
+  http.get(`${baseUrl}/api/category`, async ({ request }) => {
     const url = new URL(request.url);
     const tab = url.searchParams.get('tab') as CategoryType | null;
 
@@ -33,7 +32,6 @@ export const handlers = [
 
     return new HttpResponse(null, { status: 400 });
   }),
-
   http.get(`${baseUrl}/api/faq`, async ({ request }) => {
     const url = new URL(request.url);
     const limit = Number(url.searchParams.get('limit') || '10');

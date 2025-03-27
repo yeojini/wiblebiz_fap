@@ -1,6 +1,7 @@
 import { Category, CategoryType, FaqResponse, SubCategoryType } from '@/types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3000';
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || 'http://api.example.com';
 
 /**
  * 카테고리별 FAQ 카테고리 목록을 가져옵니다.
@@ -10,12 +11,9 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3000';
 export async function fetchCategories(
   category: CategoryType,
 ): Promise<Category[]> {
-  const response = await fetch(
-    `${API_BASE_URL}/api/faq/category?tab=${category}`,
-    {
-      cache: 'no-store',
-    },
-  );
+  const response = await fetch(`${API_BASE_URL}/api/category?tab=${category}`, {
+    cache: 'no-store',
+  });
 
   if (!response.ok) {
     throw new Error('카테고리를 불러오는데 실패했습니다.');
