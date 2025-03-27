@@ -4,7 +4,6 @@ import { kiaSignature } from './fonts';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ReactQueryProvider from '@/lib/react-query/ReactQueryProvider';
-import MSWComponent from '@/components/MSWComponent';
 import styles from './layout.module.scss';
 import '@/styles/global.scss';
 
@@ -37,7 +36,6 @@ export default function RootLayout({
     <html lang="ko" className={kiaSignature.className}>
       <body>
         <ReactQueryProvider>
-          <MSWComponent />
           <Header />
           <div className={styles.container}>{children}</div>
           <Footer />
