@@ -8,7 +8,7 @@ type LoadingProps = {
 
 export default function Loading({ className, children }: LoadingProps) {
   return (
-    <div className={`${styles.container} ${className}`}>
+    <div className={`${styles.container} ${className}`} role="status">
       <BeatLoader />
       {children}
     </div>
