@@ -42,7 +42,13 @@ const Header = () => {
         ref={headerRef}
         className={`${styles.header} ${showShadow ? styles.shadow : ''}`}
       >
-        <Logo className={styles.logo} width={120} height={40} />
+        <Logo
+          className={styles.logo}
+          width={120}
+          height={40}
+          aria-label="Wible Logo"
+          role="img"
+        />
       </header>
     </>
   );
