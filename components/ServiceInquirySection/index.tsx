@@ -3,6 +3,7 @@ import DownloadIcon from '@/assets/icons/download_icon.svg';
 import TalkIcon from '@/assets/icons/talk_icon.svg';
 import WriteIcon from '@/assets/icons/write_icon.svg';
 import styles from './ServiceInquirySection.module.scss';
+
 export default function ServiceInquirySection() {
   return (
     <section>
