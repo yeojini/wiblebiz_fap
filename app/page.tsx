@@ -3,9 +3,9 @@ import ServiceInquirySection from '@/components/ServiceInquirySection';
 import ServiceGuideSection from '@/components/ServiceGuideSection';
 import AppDownloadSection from '@/components/AppDownloadSection';
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
-export default async function Home() {
+export default function Home() {
   return (
     <main>
       <FAQSection />
