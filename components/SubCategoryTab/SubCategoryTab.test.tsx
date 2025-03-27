@@ -2,7 +2,9 @@ import { render, screen } from '@testing-library/react';
 import { useFaqCategories } from '@/services/useFAQService';
 import SubCategoryTab from './index';
 
-vi.mock('@/services/useFaqService');
+vi.mock('@/services/useFAQService', () => ({
+  useFaqCategories: vi.fn(),
+}));
 
 describe('SubCategoryTab에서', () => {
   const mockCategories = [
