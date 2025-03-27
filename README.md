@@ -214,6 +214,11 @@ assets/ # 정적 자산
   }
   ```
 
+<div style="display:flex; gap:20px; align-items:center;">
+  <img src="./assets/images/error-image.png" width="48%" alt="오류 화면">
+  <img src="./assets/images/loading-image.png" width="48%" alt="로딩 화면">
+</div>
+
 ### 4. 서버 사이드 Prefetching
 - Next.js의 서버 컴포넌트 환경에서 React Query의 데이터를 프리페치하고, 그 결과를 클라이언트 컴포넌트로 전달하기 위한 `PrefetchBoundary` 컴포넌트 구현. `await`를 사용하지 않는 **스트리밍 SSR** 방식을 채택해 데이터 로딩을 기다리지 않고 UI를 먼저 렌더링함으로써 초기 페이지 로드 속도를 개선하고 사용자 경험을 향상
   ```tsx
